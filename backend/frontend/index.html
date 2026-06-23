@@ -10,6 +10,10 @@
 
     <h1>Sistema de Validación de Documentos</h1>
 
+    <button onclick="cerrarSesion()">
+    Cerrar Sesión
+</button>
+
     <input
     type="text"
     id="titulo"
@@ -35,21 +39,36 @@
 
     <p id="mensaje"></p>
 
-    <h2>Documentos</h2>
+   <h2>Repositorio de Documentos</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Documento</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody id="tablaDocumentos">
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Área</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+            <th>Validar</th>
+        </tr>
+    </thead>
 
-    <script src="script.js"></script>
+    <tbody id="tablaDocumentos">
+    </tbody>
+</table>
+<script>
+if (
+    localStorage.getItem("autenticado")
+    !== "si"
+) {
+    window.location.href =
+    "login.html";
+}
+</script>
+
+<script src="script.js"></script>
 
 </body>
 </html>

@@ -6,7 +6,9 @@ const upload = require("../uploads/multerConfig");
 const {
     subirDocumento,
     validarDocumento,
-    listarDocumentos
+    listarDocumentos,
+    revocarDocumento,
+    cancelarDocumento
 } = require("../controllers/documentosController");
 
 router.post(
@@ -28,6 +30,11 @@ router.get(
 router.put(
     "/revocar/:id",
     revocarDocumento
+);
+
+router.put(
+    "/cancelar/:id",
+    cancelarDocumento
 );
 
 module.exports = router;

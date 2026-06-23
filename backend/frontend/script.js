@@ -1,4 +1,5 @@
 console.log("SCRIPT NUEVO CARGADO");
+
 document
 .getElementById("formulario")
 .addEventListener("submit", async (e) => {
@@ -16,21 +17,24 @@ document
     const formData = new FormData();
 
     formData.append(
-    "titulo",
-    document.getElementById("titulo").value
-);
+        "titulo",
+        document.getElementById("titulo").value
+    );
 
-formData.append(
-    "tipo",
-    document.getElementById("tipo").value
-);
+    formData.append(
+        "tipo",
+        document.getElementById("tipo").value
+    );
 
-formData.append(
-    "area",
-    document.getElementById("area").value
-);
+    formData.append(
+        "area",
+        document.getElementById("area").value
+    );
 
-    formData.append("pdf", archivo);
+    formData.append(
+        "pdf",
+        archivo
+    );
 
     try {
 
@@ -44,12 +48,15 @@ formData.append(
 
         const blob = await respuesta.blob();
 
-        const url = window.URL.createObjectURL(blob);
+        const url =
+            window.URL.createObjectURL(blob);
 
-        const enlace = document.createElement("a");
+        const enlace =
+            document.createElement("a");
 
         enlace.href = url;
-        enlace.download = "documento-validado.pdf";
+        enlace.download =
+            "documento-validado.pdf";
 
         document.body.appendChild(enlace);
 
@@ -59,6 +66,8 @@ formData.append(
 
         document.getElementById("mensaje").innerText =
             "PDF generado y descargado correctamente";
+
+        cargarDocumentos();
 
     } catch (error) {
 
@@ -88,18 +97,51 @@ async function cargarDocumentos() {
 
     documentos.forEach(doc => {
 
-       tabla.innerHTML += `
-    <tr>
-        <td>${doc.iddocumentos}</td>
-        <td>${doc.titulo}</td>
-        <td>${doc.estado}</td>
-        <td>
-            <button onclick="revocar(${doc.iddocumentos})">
-                Revocar
-            </button>
-        </td>
-    </tr>
-`;
+        tabla.innerHTML += `
+        <tr>
+
+            <td>${doc.iddocumentos}</td>
+
+            <td>${doc.titulo || ""}</td>
+
+            <td>${doc.tipo || ""}</td>
+
+            <td>${doc.area || ""}</td>
+
+            <td>
+                ${new Date(doc.fechaCreacion).toLocaleDateString()}
+            </td>
+
+            <td class="${doc.estado.toLowerCase()}">
+                ${doc.estado}
+            </td>
+
+            <td>
+
+                <button onclick="revocar(${doc.iddocumentos})">
+                    Revocar
+                </button>
+
+                <button onclick="cancelar(${doc.iddocumentos})">
+                    Cancelar
+                </button>
+
+            </td>
+
+            <td>
+
+                <a
+                href="http://localhost:3001/documentos/validar/${doc.iddocumentos}"
+                target="_blank">
+
+                Ver
+
+                </a>
+
+            </td>
+
+        </tr>
+        `;
     });
 }
 
@@ -115,4 +157,26 @@ async function revocar(id) {
     cargarDocumentos();
 }
 
+async function cancelar(id) {
+
+    await fetch(
+        `http://localhost:3001/documentos/cancelar/${id}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    cargarDocumentos();
+}
+
 cargarDocumentos();
+
+function cerrarSesion() {
+
+    localStorage.removeItem(
+        "autenticado"
+    );
+
+    window.location.href =
+        "login.html";
+}
