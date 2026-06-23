@@ -106,7 +106,20 @@ const validarDocumento = (req, res) => {
 
             const documento = results[0];
 
-           res.send(`
+            let colorEstado = "#2e7d32";
+            let iconoEstado = "✅";
+
+            if (documento.estado === "Revocado") {
+                colorEstado = "#c62828";
+                iconoEstado = "❌";
+            }
+
+            if (documento.estado === "Cancelado") {
+                colorEstado = "#ff9800";
+                iconoEstado = "⚠️";
+            }
+
+            res.send(`
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,13 +134,13 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    min-height:100vh;
     margin:0;
 }
 
 .card{
     background:white;
-    width:500px;
+    width:600px;
     padding:30px;
     border-radius:12px;
     box-shadow:0 4px 15px rgba(0,0,0,.15);
@@ -146,18 +159,17 @@ hr{
     margin-bottom:20px;
 }
 
+.estado{
+    font-size:24px;
+    font-weight:bold;
+    text-align:center;
+    margin:20px 0;
+    color:${colorEstado};
+}
+
 .info{
     margin:15px 0;
     font-size:18px;
-}
-
-.estado{
-    font-weight:bold;
-    color:${
-        documento.estado === "Revocado"
-        ? "#c62828"
-        : "#2e7d32"
-    };
 }
 
 </style>
@@ -167,23 +179,37 @@ hr{
 
 <div class="card">
 
-<h1>🔴 Documento Validado</h1>
+<h1>Sistema de Validación de Documentos</h1>
+
+<div class="estado">
+${iconoEstado} ${documento.estado}
+</div>
 
 <hr>
 
 <div class="info">
-<strong>ID:</strong> ${documento.iddocumentos}
+<strong>ID:</strong>
+${documento.iddocumentos}
 </div>
 
 <div class="info">
-<strong>Documento:</strong> ${documento.nombredoc}
+<strong>Título:</strong>
+${documento.titulo}
 </div>
 
 <div class="info">
-<strong>Estado:</strong>
-<span class="estado">
-${documento.estado}
-</span>
+<strong>Tipo:</strong>
+${documento.tipo}
+</div>
+
+<div class="info">
+<strong>Área:</strong>
+${documento.area}
+</div>
+
+<div class="info">
+<strong>Documento:</strong>
+${documento.nombredoc}
 </div>
 
 <div class="info">
