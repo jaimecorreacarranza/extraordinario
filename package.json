@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "mysql2": "^3.22.5"
+    "mysql2": "^3.22.5",
+    "pdf-lib": "^1.17.1",
+    "qrcode": "^1.5.4"
   }
 }

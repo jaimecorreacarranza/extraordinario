@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Validación</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Sistema de Validación de Documentos</h1>
+
+    <form id="formulario">
+        <input type="file" id="pdf" accept=".pdf">
+        <button type="submit">Subir PDF</button>
+    </form>
+
+    <p id="mensaje"></p>
+
+    <h2>Documentos</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Documento</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody id="tablaDocumentos">
+        </tbody>
+    </table>
+
+    <script src="scrip.js"></script>
+
+</body>
+</html>
